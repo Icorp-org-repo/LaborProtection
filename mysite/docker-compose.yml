@@ -1,0 +1,30 @@
+version: '3.7'
+
+services:
+  mysite_db:
+    image: postgres:13
+    environment:
+      POSTGRES_DB: "mysite"
+      POSTGRES_USER: "DataBaseAdmin"
+      POSTGRES_PASSWORD: ""
+      PGDATA: "/data/postgres"
+    volumes:
+      - /home/db/postgres_data13:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+  db_adminer:
+    image: adminer
+    ports:
+      - 8083:8080
+  web:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/usr/src/mysite
+    ports:
+      - 88:8000
+    depends_on:
+      - mysite_db
+
+
+
