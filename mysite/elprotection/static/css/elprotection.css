@@ -1,0 +1,41 @@
+body {
+    margin:0;
+    padding:0;
+    font-family:helvetica, sans-serif;
+}
+
+/* menu  */
+
+div.menu-bar {
+    background-color: rgba(30, 144, 255, 1.0);
+    float: left;
+}
+
+div.content {
+    box-sizing: border-box;
+
+}
+
+
+/* control panel  */
+div.control-panel {
+    background-color: rgba(240, 255, 255, 1.0);
+    margin: 1em;
+    padding: 0em;
+    position: relative;
+    float: center;
+}
+
+div.control-panel > div {
+    margin: 0em;
+    padding: 0.5em;
+}
+div.control-panel > btn-add {
+    float: right;
+}
+
+/* control table  */
+div.container-table {
+    margin: 0.1em;
+    padding: 0.1em;
+}
