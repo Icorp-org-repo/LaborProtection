@@ -4,13 +4,16 @@ from datetime import datetime
 
 
 class Company(models.Model):
-    title = models.CharField(max_length='128', verbose_name='Наименование предприятия')
-
+    name = models.CharField(max_length=128, verbose_name='Наименование предприятия')
+    slug = models.SlugField(max_length=256, )
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
+    class Meta:
+        ordering = ['-created']
+
     def __str__(self):
-        return self.title
+        return self.name
 
 
 class Position(models.Model):
