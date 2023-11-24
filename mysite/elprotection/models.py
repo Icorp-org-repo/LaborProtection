@@ -10,6 +10,8 @@ class Company(models.Model):
     updated = models.DateTimeField(auto_now=True)
 
     class Meta:
+        verbose_name = "Компания"
+        verbose_name_plural = 'Компании'
         ordering = ['-created']
 
     def __str__(self):
@@ -31,6 +33,8 @@ class Position(models.Model):
     updated = models.DateTimeField(auto_now=True)
 
     class Meta:
+        verbose_name = "Должность"
+        verbose_name_plural = 'Должности'
         ordering = ['-created']
 
     def __str__(self):
@@ -55,6 +59,10 @@ class Employ(models.Model):
     def __str__(self):
         return f"{self.second_name} {self.name} {self.surname}"
 
+    class Meta:
+        verbose_name = "Сотрудник"
+        verbose_name_plural = 'Сотрудники'
+
 
 class Admission(models.Model):
     number = models.CharField(max_length=8, help_text='Вводите только числа', verbose_name='id допуска',
@@ -64,8 +72,14 @@ class Admission(models.Model):
     knowledge = models.CharField(max_length=128, verbose_name='Область знаний')
     type = models.CharField(max_length=128, verbose_name='Наименование вида допуска')
 
+    class Meta:
+        verbose_name = "Допуск"
+        verbose_name_plural = 'Допуска'
+
     def __str__(self):
         return f"{self.title}"
+
+
 
 
 class Protocol(models.Model):
@@ -86,3 +100,7 @@ class Protocol(models.Model):
 
     def get_absolute_url(self):
         pass
+
+    class Meta:
+        verbose_name = "Протокол"
+        verbose_name_plural = 'Протокола'
