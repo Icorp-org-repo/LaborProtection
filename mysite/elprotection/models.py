@@ -80,8 +80,6 @@ class Admission(models.Model):
         return f"{self.title}"
 
 
-
-
 class Protocol(models.Model):
     class Status(models.TextChoices):
         CLEARED = 'CL', 'Сдал'
