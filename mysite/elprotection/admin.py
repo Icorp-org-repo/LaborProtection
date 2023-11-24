@@ -42,4 +42,3 @@ class ProtocolAdmin(admin.ModelAdmin):
     list_display = ('status', 'employ', 'admission', 'start', 'end')
     list_filter = ('status', 'admission', 'start', 'end')
     search_fields = ('employ', 'admission', 'number')
-
