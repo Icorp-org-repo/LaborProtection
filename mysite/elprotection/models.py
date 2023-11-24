@@ -6,6 +6,8 @@ from datetime import datetime
 class Company(models.Model):
     name = models.CharField(max_length='128', verbose_name='Наименование предприятия')
 
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
     def __str__(self):
         return self.name
 
@@ -46,7 +48,6 @@ class Employ(models.Model):
 
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
-    pass
 
     def __str__(self):
         return f"{self.second_name} {self.name} {self.surname}"
