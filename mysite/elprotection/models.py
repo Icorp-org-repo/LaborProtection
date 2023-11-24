@@ -4,13 +4,13 @@ from datetime import datetime
 
 
 class Company(models.Model):
-    name = models.CharField(max_length='128', verbose_name='Наименование предприятия')
+    title = models.CharField(max_length='128', verbose_name='Наименование предприятия')
 
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.name
+        return self.title
 
 
 class Position(models.Model):
