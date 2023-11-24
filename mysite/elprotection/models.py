@@ -8,6 +8,7 @@ class Company(models.Model):
 
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+
     def __str__(self):
         return self.name
 
@@ -40,11 +41,6 @@ class Employ(models.Model):
     #
     appointed = models.DateTimeField(default=datetime.now, verbose_name='Дата назначения на должность')
     boss = models.ForeignKey('Employ', blank=True, null=True, verbose_name='Начальник', on_delete=models.SET_NULL)
-
-    # Название штатной должности
-    # Дата назначения на должность
-    # Наименование предприятия
-    #
 
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
