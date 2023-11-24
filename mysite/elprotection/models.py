@@ -4,8 +4,8 @@ from datetime import datetime
 
 
 class Company(models.Model):
-    name = models.CharField(max_length=128, verbose_name='Наименование предприятия')
-    slug = models.SlugField(max_length=256, )
+    title = models.CharField(max_length=256, verbose_name='Наименование предприятия')
+    slug = models.SlugField(max_length=256,auto_created=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
@@ -13,7 +13,7 @@ class Company(models.Model):
         ordering = ['-created']
 
     def __str__(self):
-        return self.name
+        return self.title
 
 
 class Position(models.Model):
@@ -30,6 +30,9 @@ class Position(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
+    class Meta:
+        ordering = ['-created']
+
     def __str__(self):
         return self.title
 
@@ -37,6 +40,7 @@ class Position(models.Model):
 class Employ(models.Model):
     number = models.CharField(max_length=8, help_text='Вводите только число', verbose_name='ТабельныйНомер',
                               primary_key=True)
+    slug = models.SlugField(max_length=256, auto_created=True)
     second_name = models.CharField(max_length=25, verbose_name="Фамилия")
     name = models.CharField(max_length=25, verbose_name='Имя')
     surname = models.CharField(max_length=25, blank=True, null=True, verbose_name='Отчество')
@@ -59,6 +63,9 @@ class Admission(models.Model):
     body = models.TextField(verbose_name='Полное наименование допуска')
     knowledge = models.CharField(max_length=128, verbose_name='Область знаний')
     type = models.CharField(max_length=128, verbose_name='Наименование вида допуска')
+
+    def __str__(self):
+        return f"{self.title}"
 
 
 class Protocol(models.Model):
