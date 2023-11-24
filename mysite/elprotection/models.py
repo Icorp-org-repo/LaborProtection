@@ -5,7 +5,7 @@ from datetime import datetime
 
 class Company(models.Model):
     title = models.CharField(max_length=256, verbose_name='Наименование предприятия')
-    slug = models.SlugField(max_length=256,auto_created=True)
+    slug = models.SlugField(max_length=256, auto_created=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
@@ -76,10 +76,10 @@ class Protocol(models.Model):
 
     status = models.CharField(max_length=2, choices=Status.choices, default=Status.EXPIRED, verbose_name='Статус')
     employ = models.ForeignKey(Employ, on_delete=models.CASCADE, verbose_name='Сотрудник')
-    admission = models.ForeignKey(Admission, blank=True, null=True, on_delete=models.SET_NULL,verbose_name='Допуск')
+    admission = models.ForeignKey(Admission, blank=True, null=True, on_delete=models.SET_NULL, verbose_name='Допуск')
     start = models.DateTimeField(default=datetime.now, verbose_name='Дата протокола', blank=True, null=True)
     number = models.CharField(max_length=25, verbose_name="Номер протокола", blank=True, null=True)
-    end = models.DateTimeField(verbose_name="Дата окончания допуска",blank=True, null=True)
+    end = models.DateTimeField(verbose_name="Дата окончания допуска", blank=True, null=True)
 
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
