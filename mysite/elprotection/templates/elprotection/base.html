@@ -13,11 +13,19 @@
     {% block links %}{% endblock %}
 </head>
 <body>
-        {% block menu %}
-        {% endblock %}
+    <div class="row">
+        <div class="col-3 sidebar">
+            {% block sidebar %}
+            {% endblock %}
+        </div>
+        <div class="col-9 content">
+            {% block content %}{% endblock %}
+        </div>
+    </div>
+    
 
 
-        {% block content %}{% endblock %}
+        
 
 
 <script src="{% static 'jsf/elprotection.js' %}"></script>

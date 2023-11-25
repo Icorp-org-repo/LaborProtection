@@ -2,22 +2,18 @@
 
 {% block title %}Протокола{% endblock %}
 
-{% block menu %}
-<ul class="menu">
-  <li><a class="dropdown-item" href="#">Regular link</a></li>
-  <li><a class="dropdown-item active" href="#" aria-current="true">Active link</a></li>
-  <li><a class="dropdown-item" href="#">Another link</a></li>
-</ul>
+{% block sidebar %}
+Тест
 {% endblock %}
 
 
 {% block content %}
 <div class="control-panel">
     <div class="row">
-        <div class="col-md-11">
+        <div class="col-md-10 col-lg-11">
 
         </div>
-        <div class="col-md-1 btn-add">
+        <div class="col-md-2 col-lg-1 btn-add">
             <a type="button" class="btn btn-primary">
                 Добавить
             </a>
@@ -39,7 +35,7 @@
     <tbody>
         {% for protocol in protocols  %}
             <tr>
-                <td>{{ protocol.status. }}</td>
+                <td>{{ protocol.status }}</td>
                 <td>{{ protocol.employ.number }}</td>
                 <td>{{ protocol.employ.second_name }} {{ protocol.employ.name }} {{ protocol.employ.surname }}</td>
                 <td>{{ protocol.employ.position }}</td>

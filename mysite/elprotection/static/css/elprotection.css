@@ -6,12 +6,13 @@ body {
 
 /* menu  */
 
-div.menu-bar {
+div.sidebar {
     background-color: rgba(30, 144, 255, 1.0);
     float: left;
 }
 
 div.content {
+    background-color: rgb(255, 139, 30);
     box-sizing: border-box;
 
 }
