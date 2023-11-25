@@ -4,7 +4,7 @@ from ..models import Protocol
 
 register = template.Library()
 
-@register.inclusion_tag('elprotection/include/sidebar.html')
-def show_categories(sort=None):
 
-    return {"cats": cats, 'cat_selected': cat_selected}
+@register.inclusion_tag('elprotection/intags/sidebar.html')
+def show_sidebar():
+    return {}

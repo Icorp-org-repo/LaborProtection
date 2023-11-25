@@ -8,13 +8,12 @@ body {
 
 div.sidebar {
     background-color: rgba(30, 144, 255, 1.0);
-    float: left;
+    float: top;
 }
 
 div.content {
     background-color: rgb(255, 139, 30);
     box-sizing: border-box;
-
 }
 
 
