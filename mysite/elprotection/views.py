@@ -10,5 +10,18 @@ def protocol_list(request):
     return render(request,
                   'elprotection/protocol/list.html',
                   {
-                      'protocols': protocols
+                      'protocols': protocols,
+                      'active': 'Журнал',
                   })
+
+
+def company_list(request):
+    protocols = Protocol.objects.all()
+    return render(request,
+                  'elprotection/protocol/list.html',
+                  {
+                      'protocols': protocols,
+                      'active': 'Предприятии',
+                  })
+
+

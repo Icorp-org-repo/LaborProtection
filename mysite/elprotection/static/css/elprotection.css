@@ -6,14 +6,16 @@ body {
 
 /* menu  */
 
-div.sidebar {
-    background-color: rgba(30, 144, 255, 1.0);
-    float: top;
+.sidebar {
+    background-color: rgb(236, 235, 234);
+    padding-bottom: 0.5em;
+    padding-top: 0.5em;
 }
 
 div.content {
     background-color: rgb(255, 139, 30);
-    box-sizing: border-box;
+    margin-top: 0.3em;
+    border-radius: 5px;
 }
 
 
