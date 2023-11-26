@@ -41,3 +41,17 @@ div.container-table {
     margin: 0.1em;
     padding: 0.1em;
 }
+
+
+.dlsadkfa{
+    /* Цвет заднего плана */
+    background-color: aliceblue;
+    /* изображение заднего план */
+    background-image: none;
+    /* дублирование изображения заднего плана  repeat, repeat-x, repeat-y, no-repeat*/
+    background-repeat: no-repeat;
+    /* фиксация изображения заднего плана scroll fixex*/
+    background-attachment: scroll;
+    /* начальное положение изображения заднего плана*/
+    background-position: 0px 0px;
+}
