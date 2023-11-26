@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %} Выход {% endblock %}
+{% block body %}
+
+<main>
+    <div class="container">
+        <h1 class="form-title">
+            Выход с учетной записи
+        </h1>
+        <div class="alert alert-dark" role="alert">
+            Вы вышли с учетной записи
+        </div>
+        <a href="{% url 'login' %}" class="btn btn-outline-info">Авторизация</a>
+    </div>
+</main>
+{% endblock %}

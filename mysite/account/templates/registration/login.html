@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %} Авторизация {% endblock %}
+{% block body %}
+<main>
+    <form action="{% url 'login' %}" method="post" class="register-form-container">
+        <h1 class="form-title">
+            Авторизация
+        </h1>
+        {% if form.errors %}
+            <div class="alert alert-danger d-flex align-items-center" role="alert">
+                <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+                    <div>
+                        Вы ввели неправильный пароль или логин
+                    </div>
+            </div>
+        {% endif %}
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="hidden" name="next" value="{{ next }}" />
+        <div class="row">
+            <div class="d-grid col-6">
+                <button type="submit" class="btn btn-outline-info">Авторизация</button>
+            </div>
+            <div class="d-grid col-6">
+                <a href="{% url 'password_reset' %}" class="btn btn-outline-secondary">Забыл</a>
+            </div>
+            <div class="d-grid">
+                <a href="{% url 'register' %}" class="btn btn-outline-info">Регистрация</a>
+            </div>
+        </div>
+    </form>
+</main>
+{% endblock %}

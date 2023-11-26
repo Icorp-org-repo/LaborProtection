@@ -1,0 +1,13 @@
+{% extends "elprotection/base.html" %}
+{% block body %}
+<main>
+    <form action="{% url 'elprotection:login' %}" method="post" class="register-form-container">
+        <h1 class="form-title">
+            Авторизация
+        </h1>
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-outline-info">Регистрация</button>
+    </form>
+</main>
+{% endblock %}
