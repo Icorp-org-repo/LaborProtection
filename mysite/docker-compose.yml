@@ -6,7 +6,7 @@ services:
     environment:
       POSTGRES_DB: "mysite"
       POSTGRES_USER: "DataBaseAdmin"
-      POSTGRES_PASSWORD: ""
+      POSTGRES_PASSWORD: "Tz?lFko6Vc=a4tS9"
       PGDATA: "/data/postgres"
     volumes:
       - /home/db/postgres_data13:/var/lib/postgresql/data
