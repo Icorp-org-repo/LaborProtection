@@ -1,5 +1,6 @@
 from django.db import models
 from datetime import datetime
+from django.conf import settings
 # from django.urls import reverse
 
 
@@ -8,6 +9,7 @@ class Company(models.Model):
     slug = models.SlugField(max_length=256, auto_created=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+    administrator = models.ForeignKey('Employ', blank=True, null=True)
 
     class Meta:
         verbose_name = "Компания"
@@ -42,8 +44,9 @@ class Position(models.Model):
 
 
 class Employ(models.Model):
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     number = models.CharField(max_length=8, help_text='Вводите только число', verbose_name='ТабельныйНомер',
-                              primary_key=True)
+                              unique=True)
     slug = models.SlugField(max_length=256, auto_created=True)
     second_name = models.CharField(max_length=25, verbose_name="Фамилия")
     name = models.CharField(max_length=25, verbose_name='Имя')
