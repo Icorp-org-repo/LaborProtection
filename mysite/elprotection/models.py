@@ -9,7 +9,6 @@ class Company(models.Model):
     slug = models.SlugField(max_length=256, auto_created=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
-    administrator = models.ForeignKey('Employ', blank=True, null=True, on_delete=models.SET_NULL)
 
     class Meta:
         verbose_name = "Компания"
@@ -58,6 +57,7 @@ class Employ(models.Model):
 
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+    is_administrator = models.BooleanField(default=False)
 
     def __str__(self):
         return f"{self.second_name} {self.name} {self.surname}"
