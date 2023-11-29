@@ -34,4 +34,4 @@ class AdmissionForm(forms.ModelForm):
 class ProtocolForm(forms.ModelForm):
     class Meta:
         model = Protocol
-        fields = ['status', 'employ', 'admission', 'start', 'numbers', 'end']
+        fields = ['status', 'employ', 'admission', 'start', 'number', 'end']

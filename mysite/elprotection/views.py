@@ -5,7 +5,7 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 from django.views.generic import ListView
-from .forms import LoginForm
+from .forms import LoginForm, EmployForm
 # Create your views here.
 
 
@@ -45,7 +45,7 @@ def protocol_list(request):
                       'active': 'Журнал',
                   })
 
-
+@login_required
 def company_list(request):
     protocols = Protocol.objects.all()
     return render(request,
@@ -55,4 +55,18 @@ def company_list(request):
                       'active': 'Предприятии',
                   })
 
+@login_required
+def create_employ(request):
+    if request.method == "POST":
+        form = EmployForm(request.POST)
+        if form.is_valid():
+            pass
 
+    else:
+        form = EmployForm()
+
+    return render(request,
+                  'elprotection/employ/create.html',
+                  {
+                      'form': form
+                  })
