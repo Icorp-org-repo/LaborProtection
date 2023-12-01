@@ -1,6 +1,7 @@
 from django.db import models
 from datetime import datetime
 from django.conf import settings
+from django.contrib.auth.models import AbstractUser
 # from django.urls import reverse
 
 
@@ -47,8 +48,6 @@ class Employ(models.Model):
     number = models.CharField(max_length=8, help_text='Вводите только число', verbose_name='ТабельныйНомер',
                               primary_key=True)
     slug = models.SlugField(max_length=256, auto_created=True)
-    second_name = models.CharField(max_length=25, verbose_name="Фамилия")
-    name = models.CharField(max_length=25, verbose_name='Имя')
     surname = models.CharField(max_length=25, blank=True, null=True, verbose_name='Отчество')
     position = models.ForeignKey(Position, related_name='employs', on_delete=models.CASCADE)
     #

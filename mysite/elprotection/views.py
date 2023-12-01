@@ -70,3 +70,15 @@ def create_employ(request):
                   {
                       'form': form
                   })
+
+
+@login_required
+def show_employ(request):
+    is_admin = request.user.is_superuser
+    if is_admin:
+        pass
+    return render(request,
+                  'elprotection/employ/account.html',
+                  {
+                      'active': 'Личный кабинет',
+                  })

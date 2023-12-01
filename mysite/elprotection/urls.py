@@ -5,6 +5,7 @@ from . import views
 app_name = 'elprotection'
 
 urlpatterns = [
-    path('', views.protocol_list, name='protocols'),
+    path('', views.show_employ, name='employ'),
+    path('protocols/', views.protocol_list, name='protocols'),
     path('company/', views.company_list, name='list_company'),
 ]

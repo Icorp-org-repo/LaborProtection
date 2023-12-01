@@ -1,0 +1,22 @@
+{% extends "elprotection/base.html" %}
+{% load elprotection_tags %}
+{% block title %}Протокола{% endblock %}
+
+{% block sidebar %}
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+        {% show_sidebar active %}
+    </div>
+</nav>
+{% endblock %}
+
+{% block content %}
+
+<ul class="list-group list-group-flush"  style="text-align: left;">
+    <li class="list-group-item">Ф.И.О.: </li>
+    <li class="list-group-item">A second item</li>
+    <li class="list-group-item">A third item</li>
+    <li class="list-group-item">A fourth item</li>
+    <li class="list-group-item">And a fifth one</li>
+</ul>
+{% endblock %}

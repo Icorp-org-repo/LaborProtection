@@ -1,5 +1,6 @@
 from django import forms
 from .models import Employ, Position, Company, Admission, Protocol
+from django.contrib.auth.models import User
 
 
 class LoginForm(forms.Form):
@@ -19,7 +20,18 @@ class PositionForm(forms.ModelForm):
         fields = ['title', 'company', 'category']
 
 
-class EmployForm(forms.ModelForm):
+class UserCreateForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['first_name',]
+
+class EmployForm(forms.Form):
+    number = forms.CharField(label="Табельный номер")
+    second_name = forms.CharField(label="Фамилия")
+    name = forms.CharField(label="Имя")
+    surname = forms.CharField(label='Отчество')
+
+
     class Meta:
         model = Employ
         fields = ['number', 'second_name', 'name', 'surname', 'position', 'boss']
