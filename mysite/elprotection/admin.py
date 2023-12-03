@@ -22,11 +22,11 @@ class PositionAdmin(admin.ModelAdmin):
 
 @admin.register(Employ)
 class EmployAdmin(admin.ModelAdmin):
-    list_display = ('number', 'second_name', 'name', 'surname', 'position','appointed', 'boss')
+    list_display = ('number', 'user', 'position', 'appointed', 'boss')
     list_filter = ('appointed', 'position', )
-    search_fields = ('number','second_name', 'name', 'surname',)
+    search_fields = ('number', 'name', 'surname',)
     prepopulated_fields = {'slug': ('number',)}
-    ordering = ('second_name', 'name', 'surname','created',)
+    ordering = ('created',)
 
 
 @admin.register(Admission)
