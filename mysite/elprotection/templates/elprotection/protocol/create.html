@@ -1,10 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "elprotection/base.html" %}
 
-</body>
-</html>
+{% load static %}
+{% load elprotection_tags %}
+{% block links %}<link href="{% static 'css/account.css' %}" rel="stylesheet">{% endblock %}
+{% block title %}Протоколы{% endblock %}
+
+
+{% block content %}
+
+ <form action="{% url 'elprotection:create_protocol' %}" method="post" class="register-form-container">
+        <h1 class="form-title">
+            Создание протокола о допуске
+        </h1>
+        {{ form.as_p }}
+        {% csrf_token %}
+        <button type="submit" class="btn btn-outline-info">Создать</button>
+    </form>
+{% endblock %}

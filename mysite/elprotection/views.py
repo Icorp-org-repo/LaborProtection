@@ -1,12 +1,13 @@
 from .models import Protocol, Employ, Position
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404  # , redirect
+from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.views.decorators.http import require_POST
 from django.views.generic import ListView
-from .forms import LoginForm, EmployCreateForm, UserCreateForm
+from .forms import LoginForm, EmployCreateForm, UserCreateForm, ProtocolCreateForm
 
 from transliterate import translit
 # Create your views here.
@@ -50,6 +51,34 @@ def protocol_list(request):
                       'protocols': protocols,
                       'active': 'Журнал',
                       'is_admin_company': employ.is_administrator
+                  })
+
+@login_required
+def create_protocol(request):
+    is_admin = request.user.is_superuser
+    template_name = 'elprotection/protocol/create.html'
+    if is_admin:
+        messages.warning(request, "Вы SuperAdmin вам необходимо рабтать через Админ Панел")
+        return redirect('/admin/')
+    employ = Employ.objects.get(user=request.user)
+    if not employ.is_administrator:
+        messages.error(request, "У вас нет доступа обратитесь к администратору")
+        return_path = request.META.get('HTTP_REFERER', '/')
+        return redirect(return_path)
+    my_company = employ.position.company
+    employs = Employ.objects.filter(position__company=my_company)
+    if request.method == "POST":
+        form = ProtocolCreateForm(request.POST, employs=employs)
+        if form.is_valid():
+            data = form.save(commit=False)
+            data.save()
+    else:
+        form = ProtocolCreateForm(employs=employs)
+    return render(request,
+                  template_name,
+                  {
+                      'form': form,
+                      'active': 'Журнал',
                   })
 
 

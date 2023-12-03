@@ -25,16 +25,23 @@
         <div class="row sidebar">
             <div class="col">
                 {% block sidebar %}
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
-    <div class="container-fluid">
-        {% show_sidebar active_item=active %}
-    </div>
-</nav>
-{% endblock %}
-
+                <nav class="navbar navbar-expand-lg bg-body-tertiary">
+                    <div class="container-fluid">
+                    {% show_sidebar active_item=active %}
+                    </div>
+                </nav>
+                {% endblock %}
             </div>
         </div>
-
+        {% if messages %}
+            <ul class="messages">
+            {% for message in messages %}
+                <li class="{{ message.tags }}">
+                    {{ message|safe }}
+                </li>
+            {% endfor %}
+            </ul>
+        {% endif %}
         <div class="row">
             <div class="col content">
                 {% block content %}{% endblock %}

@@ -2,13 +2,6 @@
 {% load elprotection_tags %}
 {% block title %}Протокола{% endblock %}
 
-{% block sidebar %}
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
-    <div class="container-fluid">
-        {% show_sidebar active %}
-    </div>  
-</nav>
-{% endblock %}
 
 {% block content %}
 <div class="control-panel">
@@ -17,7 +10,7 @@
 
         </div>
         <div class="col-md-2 col-lg-1 btn-add">
-            <a type="button" class="btn btn-primary">
+            <a type="button" href="{% url 'elprotection:create_protocol' %}" class="btn btn-primary">
                 Добавить
             </a>
         </div>
@@ -40,7 +33,7 @@
             <tr>
                 <td>{{ protocol.status }}</td>
                 <td>{{ protocol.employ.number }}</td>
-                <td>{{ protocol.employ.second_name }} {{ protocol.employ.name }} {{ protocol.employ.surname }}</td>
+                <td>{{ protocol.employ }}</td>
                 <td>{{ protocol.employ.position }}</td>
             </tr>
         {% endfor %}

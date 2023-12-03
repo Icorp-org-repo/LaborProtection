@@ -48,14 +48,19 @@ class EmployCreateForm(forms.ModelForm):
 
 
 
-
 class AdmissionForm(forms.ModelForm):
     class Meta:
         model = Admission
         fields = ['number', 'title', 'body', 'knowledge', 'type']
 
 
-class ProtocolForm(forms.ModelForm):
+class ProtocolCreateForm(forms.ModelForm):
+
     class Meta:
         model = Protocol
         fields = ['status', 'employ', 'admission', 'start', 'number', 'end']
+
+    def __init__(self, *args, employs=None,  **kwargs, ):
+        super().__init__(*args, **kwargs)
+        if not (employs is None):
+            self.fields['employ'].queryset = employs
