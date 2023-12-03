@@ -131,7 +131,7 @@ EMAIL_HOST_PASSWORD = 'gqebztnucumfaoes'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
-LOGIN_REDIRECT_URL = 'elprotection:protocols'
+LOGIN_REDIRECT_URL = 'elprotection:employ'
 LOGIN_URL = 'login'
 LOGOUT_URL = 'logout'
 

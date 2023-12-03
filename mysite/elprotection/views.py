@@ -1,11 +1,11 @@
-from .models import Protocol
+from .models import Protocol, Employ
 from django.http import HttpResponse
-from django.shortcuts import render, get_object_or_404  # , redirect
+from django.shortcuts import render, redirect, get_object_or_404  # , redirect
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 from django.views.generic import ListView
-from .forms import LoginForm, EmployForm
+from .forms import LoginForm, EmployCreateForm, UserCreateForm
 # Create your views here.
 
 
@@ -58,17 +58,19 @@ def company_list(request):
 @login_required
 def create_employ(request):
     if request.method == "POST":
-        form = EmployForm(request.POST)
-        if form.is_valid():
+        user_form = UserCreateForm(request.POST, instance=request.user)
+        profile_form = EmployCreateForm(request.POST, instance=request.user.employ)
+        if user_form.is_valid() and profile_form.is_valid():
             pass
-
     else:
-        form = EmployForm()
+        user_form = UserCreateForm(instance=request.user)
+        profile_form = EmployCreateForm(instance=request.user.employ)
 
     return render(request,
                   'elprotection/employ/create.html',
                   {
-                      'form': form
+                      'user_form': user_form,
+                      'profile_form': profile_form
                   })
 
 
@@ -76,9 +78,12 @@ def create_employ(request):
 def show_employ(request):
     is_admin = request.user.is_superuser
     if is_admin:
-        pass
+        return redirect('/admin/')
+    employ = Employ.objects.get(user=request.user)
+    print(employ.user.last_name)
     return render(request,
                   'elprotection/employ/account.html',
                   {
                       'active': 'Личный кабинет',
+                      'employ': employ,
                   })
