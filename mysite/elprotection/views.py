@@ -38,14 +38,18 @@ def user_login(request):
                   content)
 
 
-@login_required()
+@login_required
 def protocol_list(request):
     protocols = Protocol.objects.all()
+    employ = Employ.objects.get(user=request.user)
+    if not employ.is_administrator:
+        return redirect('elprotection:employ')
     return render(request,
                   'elprotection/protocol/list.html',
                   {
                       'protocols': protocols,
                       'active': 'Журнал',
+                      'is_admin_company': employ.is_administrator
                   })
 
 
@@ -99,16 +103,23 @@ def show_employ(request):
 @login_required
 def show_employs(request):
     is_admin = request.user.is_superuser
-    employ = Employ.objects.get(user=request.user)
-    if employ.is_administrator:
-        employs = Employ.objects.filter(position__company=employ.position.company)
+    template_name = 'elprotection/employ/list.html'
+    if is_admin:
+        employs = Employ.objects.all()
     else:
-        employs = Employ.objects.filter(boss=employ)
+        employ = Employ.objects.get(user=request.user)
+        if employ.is_administrator:
+            employs = Employ.objects.filter(position__company=employ.position.company)
+            is_admin = True
+        else:
+            employs = Employ.objects.filter(boss=employ)
+
     return render(request,
-                  'elprotection/employ/list.html',
+                  template_name,
                   {
                       'active': 'Сотрудники',
                       'employs': employs,
+                      'is_admin': is_admin,
                   })
 
 
