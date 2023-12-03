@@ -13,10 +13,14 @@
 {% block content %}
 
 <ul class="list-group list-group-flush"  style="text-align: left;">
-    <li class="list-group-item">Ф.И.О.: </li>
-    <li class="list-group-item">A second item</li>
-    <li class="list-group-item">A third item</li>
-    <li class="list-group-item">A fourth item</li>
-    <li class="list-group-item">And a fifth one</li>
+    <li class="list-group-item">Ф.И.О.: {{ employ}}</li>
+    <li class="list-group-item">№ Табельный: {{ employ.number }} </li>
+    <li class="list-group-item">Компания: {{ employ.position.company }} </li>
+    <li class="list-group-item">Должность: {{ employ.position }}</li>
+    <li class="list-group-item">Начальник: {{ employ.boss }}</li>
+    {% if employ.is_administrator %}
+        <li class="list-group-item">Вы являетесь администратором Компании</li>
+    {% endif %}
+
 </ul>
 {% endblock %}
