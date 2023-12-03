@@ -59,7 +59,7 @@ class Employ(models.Model):
     is_administrator = models.BooleanField(default=False)
 
     def __str__(self):
-        return f"{self.second_name} {self.name} {self.surname}"
+        return f"{self.user.last_name} {self.user.first_name} {self.surname}"
 
     class Meta:
         verbose_name = "Сотрудник"
