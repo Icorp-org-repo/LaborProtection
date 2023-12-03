@@ -23,14 +23,30 @@ class PositionForm(forms.ModelForm):
 class UserCreateForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ['first_name', 'last_name', 'email']
+        fields = ['username', 'first_name', 'last_name', 'email']
 
 
-class EmployCreateForm(forms.Form):
+class EmployCreateForm(forms.ModelForm):
+    position = forms.ModelChoiceField(label="Должность",queryset=Position.objects.all(), required=True)
+    boss = forms.ModelChoiceField(label="Начальник", queryset=Employ.objects.all(), required=False)
 
     class Meta:
         model = Employ
-        fields = ['number', 'surname', 'position', 'boss']
+        fields = ['number', 'surname']
+
+    def __init__(self, *args, positions=None, bosses=None,  **kwargs, ):
+        super().__init__(*args, **kwargs)
+        if not (positions is None):
+            self.fields["position"].queryset = positions
+            self.fields['boss'].queryset = bosses
+
+    def clean_position(self):
+        cd = self.cleaned_data
+        if (cd['position'] is None) or (not cd['position']):
+            raise forms.ValidationError("Должность обезательное поля")
+        return cd['position']
+
+
 
 
 class AdmissionForm(forms.ModelForm):

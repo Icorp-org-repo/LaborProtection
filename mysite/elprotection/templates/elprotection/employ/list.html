@@ -1,0 +1,41 @@
+{% extends "elprotection/base.html" %}
+{% load elprotection_tags %}
+{% block title %}Сотрудники{% endblock %}
+
+{% block content %}
+<div class="control-panel">
+    <div class="row">
+        <div class="col-md-10 col-lg-11">
+
+        </div>
+        <div class="col-md-2 col-lg-1 btn-add">
+            <a type="button" href="{% url 'elprotection:create_employ' %}" class="btn btn-primary">
+                Добавить
+            </a>
+        </div>
+
+    </div>
+</div>
+<div class="row container-table">
+<table class="table table-light">
+    <thead>
+        <tr>
+            <th scope="col">Табельный номер</th>
+            <th scope="col">Ф. И. О.</th>
+            <th scope="col">Название штатной должности</th>
+            <th scope="col">Дата назначения</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in employs %}
+            <tr>
+                <td>{{ item.number }}</td>
+                <td>{{ item }}</td>
+                <td>{{ item.position }}</td>
+                <td>{{ item.appointed }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+</div>
+{% endblock %}

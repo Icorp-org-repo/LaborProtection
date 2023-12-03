@@ -10,7 +10,7 @@ def show_sidebar(active_item=None):
     return {'list_menu':
                 [{'title': "Личный кабинет", 'url': 'elprotection:employ'},
                  {'title': 'Журнал', 'url': 'elprotection:protocols'},
-                 {'title': 'Предприятии', 'url': 'elprotection:list_company'}
+                 {'title': 'Сотрудники', 'url': 'elprotection:list_employ'}
                  ],
             'active_item': active_item}
 
