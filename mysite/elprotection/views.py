@@ -9,7 +9,7 @@ from django.views.decorators.http import require_POST
 from django.views.generic import ListView
 from .forms import LoginForm, EmployCreateForm, UserCreateForm, ProtocolCreateForm
 
-from transliterate import translit
+
 # Create your views here.
 
 
@@ -40,17 +40,25 @@ def user_login(request):
 
 
 @login_required
-def protocol_list(request):
-    protocols = Protocol.objects.all()
-    employ = Employ.objects.get(user=request.user)
-    if not employ.is_administrator:
-        return redirect('elprotection:employ')
+def show_protocols(request):
+    is_admin = request.user.is_superuser
+    if is_admin:
+        protocols = Protocol.objects.all()
+        messages.warning(request, "Вы SuperAdmin можете смотреть в адмн. понели")
+    else:
+        employ = Employ.objects.get(user=request.user)
+        if employ.is_administrator:
+            protocols = Protocol.objects.filter(employ__position__company=employ.position.company)
+            is_admin = True
+        else:
+            protocols = Protocol.objects.filter(employ__boss=employ)
+
     return render(request,
                   'elprotection/protocol/list.html',
                   {
                       'protocols': protocols,
                       'active': 'Журнал',
-                      'is_admin_company': employ.is_administrator
+                      'is_admin_company': is_admin
                   })
 
 @login_required
@@ -84,6 +92,9 @@ def create_protocol(request):
 
 @login_required
 def create_employ(request):
+    if request.user.is_superuser:
+        messages.error(request,"Вы Админ")
+        return redirect('/admin/elprotection/employ/add/')
     employ = Employ.objects.get(user=request.user)
     my_company = employ.position.company
     positions = Position.objects.filter(company=my_company)
