@@ -10,7 +10,7 @@ from django.views.decorators.http import require_POST
 from django.views.generic import ListView
 from django.template.loader import render_to_string
 from .forms import LoginForm, EmployCreateForm, UserCreateForm, ProtocolCreateForm, PositionCreateForm
-
+from .forms import UserEditForm, EmployEditForm
 
 
 # Create your views here.
@@ -168,6 +168,33 @@ def edit_employ(request, employ_slug):
     is_admin = request.user.is_superuser
     if is_admin:
         return redirect(f'/admin/elprotection/employ/{employ_slug}/change/')
+    employ = Employ.objects.get(user=request.user)
+    target_employ = Employ.objects.get(slug=employ_slug)
+    if employ != target_employ:
+            if not (employ.is_administrator):
+                messages.error(request, "У вас нет доступа обратитесь к администратору")
+                return_path = request.META.get('HTTP_REFERER', '/')
+                return redirect(return_path)
+            elif employ.position.company != target_employ.position.company:
+                messages.error(request, "У вас нет доступа обратитесь к администратору")
+                return_path = request.META.get('HTTP_REFERER', '/')
+                return redirect(return_path)
+    if request.method == 'POST':
+        user_form = UserEditForm(instance=target_employ.user, data=request.POST)
+        employ_form = EmployEditForm(instance=request.user.employ, data=request.Post)
+        if user_form.is_valid() and employ_form.is_valid():
+            user_form.save()
+            employ_form.save()
+    else:
+        user_form = UserEditForm(instance=target_employ.user)
+        employ_form = EmployEditForm(instance=target_employ)
+    return render(request,
+                  'elprotection/employ/edit.html',
+                  {
+                      'active': 'Сотрудники',
+                      'user_form': user_form,
+                      'employ_form': employ_form
+                  })
 
 
 @login_required
