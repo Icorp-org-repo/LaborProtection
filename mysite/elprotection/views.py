@@ -5,9 +5,12 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.core.mail import send_mail
 from django.views.decorators.http import require_POST
 from django.views.generic import ListView
-from .forms import LoginForm, EmployCreateForm, UserCreateForm, ProtocolCreateForm
+from django.template.loader import render_to_string
+from .forms import LoginForm, EmployCreateForm, UserCreateForm, ProtocolCreateForm, PositionCreateForm
+
 
 
 # Create your views here.
@@ -58,7 +61,7 @@ def show_protocols(request):
                   {
                       'protocols': protocols,
                       'active': 'Журнал',
-                      'is_admin_company': is_admin
+                      'is_admin': is_admin
                   })
 
 @login_required
@@ -99,6 +102,10 @@ def create_employ(request):
     my_company = employ.position.company
     positions = Position.objects.filter(company=my_company)
     bosses = Employ.objects.filter(position__company=my_company)
+    if not employ.is_administrator:
+        messages.error(request, "У вас нет доступа обратитесь к администратору")
+        return_path = request.META.get('HTTP_REFERER', '/')
+        return redirect(return_path)
     if request.method == "POST":
         user_form = UserCreateForm(request.POST,)
         profile_form = EmployCreateForm(request.POST,positions=positions, bosses=bosses)
@@ -106,13 +113,16 @@ def create_employ(request):
             new_user = user_form.save(commit=False)
             new_employ = profile_form.save(commit=False)
             password = User.objects.make_random_password()
-            print(password)
+            msg = render_to_string("elprotection/employ/msg_create.html",
+                             {'username': new_user.username, 'password':password})
             new_user.set_password(password)
             new_user.save()
+            new_employ.slag = new_employ.number
             new_employ.user = new_user
             new_employ.position = profile_form.cleaned_data['position']
             new_employ.boss = profile_form.cleaned_data['boss']
             new_employ.save()
+            send_mail('Создали учетную запись', msg, "djangofortest777@gmail.com", [new_user.email], html_message=msg)
     else:
         user_form = UserCreateForm()
         profile_form = EmployCreateForm(positions=positions, bosses=bosses)
@@ -138,6 +148,26 @@ def show_employ(request):
                       'active': 'Личный кабинет',
                       'employ': employ,
                   })
+
+
+@login_required
+def employ(request):
+    is_admin = request.user.is_superuser
+    if is_admin:
+        return redirect('/admin/')
+    employ = Employ.objects.get(user=request.user)
+    return render(request,
+                  'elprotection/employ/account.html',
+                  {
+                      'active': 'Личный кабинет',
+                      'employ': employ,
+                  })
+
+@login_required
+def edit_employ(request, employ_slug):
+    is_admin = request.user.is_superuser
+    if is_admin:
+        return redirect(f'/admin/elprotection/employ/{employ_slug}/change/')
 
 
 @login_required
@@ -174,4 +204,33 @@ def company_list(request):
                   {
                       'protocols': protocols,
                       'active': 'Предприятии',
+                  })
+
+
+@login_required
+def create_position(request):
+    if request.user.is_superuser:
+        messages.error(request, "Вы Админ")
+        return redirect('/admin/elprotection/position/add/')
+    employ = Employ.objects.get(user=request.user)
+    if not employ.is_administrator:
+        messages.error(request, "У вас нет доступа обратитесь к администратору")
+        return_path = request.META.get('HTTP_REFERER', '/')
+        return redirect(return_path)
+    my_company = employ.position.company
+    if request.method == "POST":
+        form = PositionCreateForm(request.POST)
+        if form.is_valid():
+            new_position = form.save(commit=False)
+            new_position.company = my_company
+            new_position.save()
+        return redirect('elprotection:list_employ')
+    else:
+        form = PositionCreateForm()
+
+    return render(request,
+                  'elprotection/employ/create_position.html',
+                  {
+                      'form': form,
+                      'active': 'Сотрудники',
                   })

@@ -1,8 +1,9 @@
 from django.shortcuts import render
 from .forms import UserRegistrationForm
-from django.core.mail import send_mail
+from django.core.mail import send_mail, mail_admins
 from django.contrib import messages
 # Create your views here.
+# mail_admins - для отправки сообщение Администраторам Сайта
 
 
 def register(request):

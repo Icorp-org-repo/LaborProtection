@@ -1,0 +1,19 @@
+{% extends "elprotection/base.html" %}
+
+{% load static %}
+{% load elprotection_tags %}
+{% block links %}<link href="{% static 'css/account.css' %}" rel="stylesheet">{% endblock %}
+{% block title %}Сотрудники{% endblock %}
+
+
+{% block content %}
+
+ <form action="{% url 'elprotection:create_position' %}" method="post" class="register-form-container">
+        <h1 class="form-title">
+            Создание должности
+        </h1>
+        {{ form.as_p }}
+        {% csrf_token %}
+        <button type="submit" class="btn btn-outline-info">Регистрация</button>
+    </form>
+{% endblock %}

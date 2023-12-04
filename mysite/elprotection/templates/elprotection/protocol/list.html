@@ -6,13 +6,18 @@
 {% block content %}
 <div class="control-panel">
     <div class="row">
-        <div class="col-md-10 col-lg-11">
+        <div class="col-md-9 col-lg-10">
 
         </div>
-        <div class="col-md-2 col-lg-1 btn-add">
+        <div class="col-md-3 col-lg-2 btn-add">
+            <div class="row mb-1 mt-1">
+            {% if is_admin %}
             <a type="button" href="{% url 'elprotection:create_protocol' %}" class="btn btn-primary">
-                Добавить
+                Протокол +
             </a>
+            {% endif %}
+            </div>
+
         </div>
 
     </div>
@@ -31,7 +36,7 @@
     <tbody>
         {% for protocol in protocols  %}
             <tr>
-                <td>{{ protocol.status }}</td>
+                <td>{{ protocol.get_status_display }}</td>
                 <td>{{ protocol.employ.number }}</td>
                 <td>{{ protocol.employ }}</td>
                 <td>{{ protocol.employ.position }}</td>

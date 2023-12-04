@@ -5,15 +5,24 @@
 {% block content %}
 <div class="control-panel">
     <div class="row">
-        <div class="col-md-10 col-lg-11">
+        <div class="col-md-9 col-lg-10">
 
         </div>
-        <div class="col-md-2 col-lg-1 btn-add">
+        <div class="col-md-3 col-lg-2 btn-add">
+            <div class="row mb-1 mt-1">
             {% if is_admin %}
             <a type="button" href="{% url 'elprotection:create_employ' %}" class="btn btn-primary">
-                Добавить
+                Сотрудник +
             </a>
             {% endif %}
+            </div>
+            <div class="row mb-1 mt-1">
+            {% if is_admin %}
+            <a type="button" href="{% url 'elprotection:create_position' %}" class="btn btn-primary">
+                Должность +
+            </a>
+            {% endif %}
+            </div>
         </div>
 
     </div>
@@ -31,11 +40,12 @@
     <tbody>
         {% for item in employs %}
             <tr>
-                <td>{{ item.number }}</td>
+                <td><a href="{% url 'elprotection:edit_employ' item.slug %}"> {{ item.number }} </a></td>
                 <td>{{ item }}</td>
                 <td>{{ item.position }}</td>
                 <td>{{ item.appointed }}</td>
             </tr>
+
         {% endfor %}
     </tbody>
 </table>
