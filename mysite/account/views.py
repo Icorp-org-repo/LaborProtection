@@ -1,4 +1,6 @@
 from django.shortcuts import render
+from django.template.loader import render_to_string
+
 from .forms import UserRegistrationForm
 from django.core.mail import send_mail, mail_admins
 from django.contrib import messages
@@ -13,12 +15,14 @@ def register(request):
             new_user = user_form.save(commit=False)
             cd = user_form.cleaned_data
             subject = f"{new_user.username} регистрация"
-            message = (f"Name:{new_user.username} Почта: {new_user.email}\n Компания {cd['company_name']} Должность {cd['position']}"
-                       f"\n{cd['position']} category: {cd['category']}\n"
-                       f"{new_user.last_name} {new_user.first_name} {cd['surname']}")
-            send_mail(subject, message, 'djangofortest777@gmail.com', ['elzig3012@gmail.com'])
+            msg = render_to_string("account/msg.html",
+                                   {'new_user': new_user, 'company_name': cd['company_name'],
+                                    'position': cd['position'], 'category': cd['category'],
+                                    'surname': cd['surname']})
+            mail_admins(subject, msg, html_message=msg)
+
             messages.success(request, "Заявка оформлена прошу вас ожидать ответа на указанную почту")
-            return render(request, 'account/register.html', {'new_user': new_user})
+            return render(request, 'account/register.html', {'user_form': user_form})
 
     else:
         user_form = UserRegistrationForm()
