@@ -58,6 +58,10 @@ class EmployEditForm(forms.ModelForm):
     class Meta:
         model = Employ
         fields = ['surname']
+        # widgets = {
+        #     'title': forms.TextInput(attrs={'class': 'form-input'}),
+        #     'content': forms.Textarea(attrs={'cols': 60, 'rows': 10}),
+        # }
 
     def __init__(self, *args, positions=None, bosses=None,  **kwargs, ):
         super().__init__(*args, **kwargs)
@@ -77,7 +81,7 @@ class ProtocolCreateForm(forms.ModelForm):
 
     class Meta:
         model = Protocol
-        fields = ['status', 'employ', 'admission', 'start', 'number', 'end']
+        fields = ['employ', 'admission', 'start', 'number', 'end']
 
     def __init__(self, *args, employs=None,  **kwargs, ):
         super().__init__(*args, **kwargs)

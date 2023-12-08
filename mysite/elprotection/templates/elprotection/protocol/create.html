@@ -7,13 +7,17 @@
 
 
 {% block content %}
+<div class="form_center mt-1">
 
- <form action="{% url 'elprotection:create_protocol' %}" method="post" class="register-form-container">
+    <form action="{% url 'elprotection:create_protocol' %}" method="post" class="register-form-container">
         <h1 class="form-title">
             Создание протокола о допуске
         </h1>
         {{ form.as_p }}
         {% csrf_token %}
-        <button type="submit" class="btn btn-outline-info">Создать</button>
+        <div class="d-grid mb-1 mt-1">
+            <button type="submit" class="btn btn-success ">Создать</button>
+        </div>
     </form>
+</div>
 {% endblock %}

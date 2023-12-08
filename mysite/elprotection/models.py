@@ -88,7 +88,7 @@ class Protocol(models.Model):
         WARNING = 'WR', 'Скоро истечет'
         EXPIRED = 'EX', 'Нет допуска'
 
-    status = models.CharField(max_length=2, choices=Status.choices, default=Status.EXPIRED, verbose_name='Статус')
+    status = models.CharField(max_length=2, choices=Status.choices, default=Status.EXPIRED, verbose_name='Статус',)
     employ = models.ForeignKey(Employ, on_delete=models.CASCADE, verbose_name='Сотрудник')
     admission = models.ForeignKey(Admission, blank=True, null=True, on_delete=models.SET_NULL, verbose_name='Допуск')
     start = models.DateTimeField(default=datetime.now, verbose_name='Дата протокола', blank=True, null=True)
@@ -97,6 +97,15 @@ class Protocol(models.Model):
 
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+
+    def get_status(self):
+        print(self.end.__str__())
+        string_as_date = datetime.strptime(self.end.__str__()[:-6], '%Y-%m-%d %H:%M:%S')
+        if (string_as_date < datetime.now()):
+            return "Нет допуска"
+        else:
+            return 'Сдал'
+
 
     def get_absolute_url(self):
         pass

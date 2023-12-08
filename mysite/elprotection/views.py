@@ -142,11 +142,13 @@ def show_employ(request):
     if is_admin:
         return redirect('/admin/')
     employ = Employ.objects.get(user=request.user)
+    protocols = Protocol.objects.filter(employ=employ)
     return render(request,
                   'elprotection/employ/account.html',
                   {
                       'active': 'Личный кабинет',
                       'employ': employ,
+                      'protocols':protocols,
                   })
 
 
