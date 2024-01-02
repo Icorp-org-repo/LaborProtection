@@ -1,5 +1,6 @@
 from .models import Protocol, Employ, Position
 from django.http import HttpResponse
+from django.urls import reverse
 from django.shortcuts import render, redirect, get_object_or_404  # , redirect
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
@@ -14,7 +15,7 @@ from .forms import UserEditForm, EmployEditForm
 
 
 # Create your views here.
-
+admin_email = "djangofortest777@gmail.com"
 
 def user_login(request):
     template = "elprotection/login.html"
@@ -83,6 +84,7 @@ def create_protocol(request):
         if form.is_valid():
             data = form.save(commit=False)
             data.save()
+            return redirect('elprotection:protocols', permanent=True)
     else:
         form = ProtocolCreateForm(employs=employs)
     return render(request,
@@ -116,13 +118,13 @@ def create_employ(request):
             msg = render_to_string("elprotection/employ/msg_create.html",
                              {'username': new_user.username, 'password':password})
             new_user.set_password(password)
-            new_user.save()
-            new_employ.slag = new_employ.number
             new_employ.user = new_user
             new_employ.position = profile_form.cleaned_data['position']
             new_employ.boss = profile_form.cleaned_data['boss']
+            new_user.save()
             new_employ.save()
-            send_mail('Создали учетную запись', msg, "djangofortest777@gmail.com", [new_user.email], html_message=msg)
+            send_mail('Создали учетную запись', msg, admin_email, [new_user.email], html_message=msg)
+            return redirect('elprotection:list_employ', permanent=True)
     else:
         user_form = UserCreateForm()
         profile_form = EmployCreateForm(positions=positions, bosses=bosses)
@@ -187,6 +189,7 @@ def edit_employ(request, employ_slug):
         if user_form.is_valid() and employ_form.is_valid():
             user_form.save()
             employ_form.save()
+            return redirect('elprotection:list_employ', permanent=True)
     else:
         user_form = UserEditForm(instance=target_employ.user)
         employ_form = EmployEditForm(instance=target_employ)

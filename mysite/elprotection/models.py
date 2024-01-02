@@ -1,6 +1,7 @@
 from django.db import models
 from datetime import datetime
 from django.conf import settings
+from django.utils.text import slugify
 from django.contrib.auth.models import AbstractUser
 # from django.urls import reverse
 
@@ -60,6 +61,11 @@ class Employ(models.Model):
 
     def __str__(self):
         return f"{self.user.last_name} {self.user.first_name} {self.surname}"
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.number)
+        return super(Employ, self).save(*args, **kwargs)
 
     class Meta:
         verbose_name = "Сотрудник"

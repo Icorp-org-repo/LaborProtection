@@ -10,13 +10,13 @@
 
  <form action="{% url 'elprotection:create_employ' %}" method="post" class="register-form-container">
         <h1 class="form-title">
-            Авторизация
+            Регистрация
         </h1>
         {{ user_form.as_p }}
         {{ profile_form.as_p }}
 
 
         {% csrf_token %}
-        <button type="submit" class="btn btn-outline-info">Регистрация</button>
+        <button type="submit" class="btn btn-success">Регистрация</button>
     </form>
 {% endblock %}
